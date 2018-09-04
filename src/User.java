@@ -1,13 +1,32 @@
+import java.util.Objects;
+
 class User {
 
-    private static int accountBalance = 500;
+    private static int accountBalance;
     private String userName, accountNumber, password, emailId;
 
-    User(String userName, String password, String emailId) {
+    User(String userName, String password, String emailId, int accountBalance) {
         this.userName = userName;
         this.accountNumber = generateAccountNumber();
         this.password = password;
         this.emailId = emailId;
+        User.accountBalance = accountBalance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userName, user.userName) &&
+                Objects.equals(accountNumber, user.accountNumber) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(emailId, user.emailId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, accountNumber, password, emailId);
     }
 
     @Override

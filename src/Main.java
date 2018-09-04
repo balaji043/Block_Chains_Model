@@ -48,15 +48,15 @@ public class Main {
         String[] getMessages = {"Enter User Name", "Enter Email Address", "Enter Password"};
         System.out.println(getMessages[0]);
         userName = scanner.next();
-        if (userName.equalsIgnoreCase("Hubert") || userName.equalsIgnoreCase("Romario") || userName.equalsIgnoreCase("HubertRomario")) {
+/*        if (userName.equalsIgnoreCase("Hubert") || userName.equalsIgnoreCase("Romario") || userName.equalsIgnoreCase("HubertRomario")) {
             System.out.println("Fuck Off");
             return;
-        }
+        }*/
         System.out.println(getMessages[1]);
         emailId = scanner.next();
         System.out.println(getMessages[2]);
         password = scanner.next();
-        User user = new User(userName, password, emailId);
+        User user = new User(userName, password, emailId, 500);
         userHashMap.add(user);
         System.out.println(user.getAccountNumber());
     }
@@ -181,7 +181,7 @@ public class Main {
     //  Transfer Money
     private static boolean transferMoney(String sender, String receiver, String amount) {
         String transaction[] = {"" + sender, "" + amount, "" + receiver};
-        if (!verifyTransaction(transaction)) return false;
+        //if (!blockChain.isEmpty()&&!verifyTransaction(transaction)) return false;
         int previousHashCode = 0;
         if (!blockChain.isEmpty()) previousHashCode = blockChain.get(blockChain.size() - 1).getBlockHash();
         Block block = new Block(previousHashCode, transaction);
@@ -199,7 +199,6 @@ public class Main {
         Miner miner = new Miner(blockChain, transaction);
         return !miner.mine();
     }
-
     // Verify User Password
     private static boolean verifyUserPassword(String user, String password) {
         return userHashMap.get(getUser(user)).getPassword().equals(password);
