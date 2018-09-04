@@ -181,7 +181,7 @@ public class Main {
     //  Transfer Money
     private static boolean transferMoney(String sender, String receiver, String amount) {
         String transaction[] = {"" + sender, "" + amount, "" + receiver};
-        //if (!blockChain.isEmpty()&&!verifyTransaction(transaction)) return false;
+        if (!blockChain.isEmpty() && !verifyTransaction(transaction)) return false;
         int previousHashCode = 0;
         if (!blockChain.isEmpty()) previousHashCode = blockChain.get(blockChain.size() - 1).getBlockHash();
         Block block = new Block(previousHashCode, transaction);
