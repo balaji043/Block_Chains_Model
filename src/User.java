@@ -1,9 +1,7 @@
-import org.jetbrains.annotations.NotNull;
+class User {
 
-final class User {
-
-    private final String userName, accountNumber, password, emailId;
     private static int accountBalance = 500;
+    private String userName, accountNumber, password, emailId;
 
     User(String userName, String password, String emailId) {
         this.userName = userName;
@@ -38,7 +36,6 @@ final class User {
         User.accountBalance = accountBalance;
     }
 
-    @NotNull
     private String generateAccountNumber() {
         return ("" + this.hashCode()).substring(2);
     }

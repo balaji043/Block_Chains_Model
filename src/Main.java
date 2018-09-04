@@ -88,8 +88,7 @@ public class Main {
             System.out.println(errorMessage[2]);
             return;
         }
-        User user = getUser(userAccountNumber);
-        System.out.println(user.toString());
+        System.out.println((userHashMap.get(getUser(userAccountNumber))).toString());
     }
 
     //  Show All
@@ -100,13 +99,13 @@ public class Main {
     }
 
     //get user using account number
-    private static User getUser(String accountNumber) {
-        for (User anUserHashMap : userHashMap) {
-            if (anUserHashMap.getAccountNumber().equals(accountNumber)) {
-                return anUserHashMap;
+    private static int getUser(String accountNumber) {
+        for (int i = 0; i < userHashMap.size(); i++) {
+            if (userHashMap.get(i).getAccountNumber().equals(accountNumber)) {
+                return i;
             }
         }
-        return new User("", "", "");
+        return 0;
     }
 
     //  Verify user Blocks and Call Transfer Money
@@ -187,10 +186,11 @@ public class Main {
         if (!blockChain.isEmpty()) previousHashCode = blockChain.get(blockChain.size() - 1).getBlockHash();
         Block block = new Block(previousHashCode, transaction);
         blockChain.add(block);
-        User s = getUser(sender);
-        User r = getUser(receiver);
-        s.setAccountBalance(s.getAccountBalance() - Integer.parseInt(amount));
-        r.setAccountBalance(r.getAccountBalance() + Integer.parseInt(amount));
+        int s = getUser(sender);
+        int r = getUser(receiver);
+        userHashMap.get(s).setAccountBalance(userHashMap.get(s).getAccountBalance() - Integer.parseInt(amount));
+        userHashMap.get(r).setAccountBalance(userHashMap.get(r).getAccountBalance() + Integer.parseInt(amount));
+        System.out.println("s: " + userHashMap.get(s).getAccountBalance() + "\nr :" + userHashMap.get(r).getAccountBalance());
         return true;
     }
 
@@ -202,16 +202,16 @@ public class Main {
 
     // Verify User Password
     private static boolean verifyUserPassword(String user, String password) {
-        return (getUser(user)).getPassword().equals(password);
+        return userHashMap.get(getUser(user)).getPassword().equals(password);
     }
 
     //  Verify User
     private static boolean verifyUser(String user) {
-        return userHashMap.contains(getUser(user));
+        return userHashMap.contains(userHashMap.get(getUser(user)));
     }
 
     // Verify User Account amount
     private static boolean verifyUser(String user, String amount) {
-        return (getUser(user)).getAccountBalance() > Integer.parseInt(amount);
+        return userHashMap.get(getUser(user)).getAccountBalance() > Integer.parseInt(amount);
     }
 }
