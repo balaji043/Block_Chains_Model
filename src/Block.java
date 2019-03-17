@@ -1,22 +1,43 @@
 import java.util.Arrays;
 
 class Block {
-    private static int previousHash;
-    private static int blockHash;
-    private static String[] transactions;
-    Block(int previousHash, String[] transactions) {
-        Block.previousHash = previousHash;
-        Block.transactions = transactions;
-        Object[] objects = {Arrays.hashCode(transactions), previousHash};
-        Block.blockHash = Arrays.hashCode(objects);
+    private String previousHash;
+    private String blockHash;
+    private String[] transactions;
+
+    Block(String previousHash, String[] transactions) {
+        this.previousHash = previousHash;
+        this.transactions = transactions;
+        this.previousHash = previousHash;
+        this.blockHash = SHA256.getSHA(previousHash + Arrays.toString(transactions));
     }
-    public String getReceivers() {
+
+    String getBlockHash() {
+        return blockHash;
+    }
+
+    String getPreviousHash() {
+        return previousHash;
+    }
+
+    String getSender() {
+        return transactions[0];
+    }
+
+    String getAmount() {
+        return transactions[1];
+    }
+
+    String getReciever() {
         return transactions[2];
     }
-    public int getAmount() {
-        return Integer.parseInt(transactions[1]);
-    }
-    public int getBlockHash() {
-        return blockHash;
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "previousHash='" + previousHash + '\'' +
+                ", blockHash='" + blockHash + '\'' +
+                ", transactions=" + Arrays.toString(transactions) +
+                '}';
     }
 }

@@ -1,20 +1,29 @@
 import java.util.ArrayList;
 
 class Miner {
-    private static ArrayList<Block> blockChains = new ArrayList<>();
-    private static String[] transaction;
-    Miner(ArrayList<Block> blockChains,String[] transaction){
-        Miner.blockChains = blockChains;
-        Miner.transaction = transaction;
+    private ArrayList<Block> blockChains;
+    private String[] transaction;
+
+    Miner(ArrayList<Block> blockChains, String[] transaction) {
+        this.blockChains = blockChains;
+        this.transaction = transaction;
     }
 
     boolean mine() {
-        int balance =0;
+        int balance = 0;
         for (Block blockChain : blockChains) {
+/*
             if (blockChain.getReceivers().equals(transaction[1])) {
-                balance = balance+blockChain.getAmount();
+                balance = balance + blockChain.getAmount();
             }
+*/
         }
-        return balance >= Integer.parseInt(transaction[1]);
+        return true;
+    }
+
+    boolean min() {
+        for (Block block : blockChains) {
+        }
+        return true;
     }
 }

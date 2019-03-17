@@ -1,16 +1,20 @@
+import java.util.ArrayList;
 import java.util.Objects;
 
 class User {
 
-    private static int accountBalance;
-    private String userName, accountNumber, password, emailId;
+    private int accountBalance;
+    private final String accountNumber;
+    private String userName, password, emailId;
+    private ArrayList<Block> blockArrayList;
 
-    User(String userName, String password, String emailId, int accountBalance) {
+    User(String userName, String password, String emailId, int accountBalance, ArrayList<Block> blockArrayList) {
         this.userName = userName;
         this.accountNumber = generateAccountNumber();
         this.password = password;
         this.emailId = emailId;
-        User.accountBalance = accountBalance;
+        this.accountBalance = accountBalance;
+        this.blockArrayList = blockArrayList;
     }
 
     @Override
@@ -31,9 +35,10 @@ class User {
 
     @Override
     public String toString() {
-        String details[] = {"Name : ", "Number : ", "E-MailID : ", "Balance : ", "Password : "};
+        String[] details = {"Name : ", "Number : ", "E-MailID : ", "Balance : ", "Password : "};
         String userInfo;
-        userInfo = String.format("%20s%s%n%20s%s%n%20s%s%n%20s%s%n%20s%s%n%20s%s%n\n", "Welcome ", userName, details[0], userName, details[1], accountNumber, details[2], emailId, details[3], accountBalance, details[4], password);
+        userInfo = String.format("%20s%s%n%20s%s%n%20s%s%n%20s%s%n%20s%s%n%20s%s%n\n", "Welcome ", userName, details[0], userName, details[1]
+                , accountNumber, details[2], emailId, details[3], accountBalance, details[4], password);
         return userInfo;
     }
 
@@ -50,13 +55,30 @@ class User {
         return accountBalance;
     }
 
-    // Setters for Balance
-    void setAccountBalance(int accountBalance) {
-        User.accountBalance = accountBalance;
-    }
-
     private String generateAccountNumber() {
         return ("" + this.hashCode()).substring(2);
     }
 
+    void add(String amount) {
+        accountBalance = accountBalance + Integer.parseInt(amount);
+    }
+
+    void sub(String amount) {
+        accountBalance = accountBalance - Integer.parseInt(amount);
+    }
+
+    void addBlock(Block block) {
+        blockArrayList.add(block);
+    }
+
+    @SuppressWarnings("Duplicates")
+    public int getTotal(String sender) {
+        int total = 0;
+        for (Block block : blockArrayList) {
+            if (sender.equals(block.getReciever())) {
+                total = total + Integer.parseInt(block.getAmount());
+            }
+        }
+        return 0;
+    }
 }
